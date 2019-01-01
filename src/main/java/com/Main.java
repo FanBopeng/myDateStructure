@@ -1,6 +1,11 @@
 package com;
 
 import com.array.MyArray;
+import com.queue.ArrayQueue;
+import com.queue.LoopQuque;
+import com.queue.Queue;
+
+import java.util.Random;
 
 /**
  * @author: fanbopeng
@@ -9,21 +14,41 @@ import com.array.MyArray;
  */
 public class Main {
 
+    private static double testQueue(Queue<Integer> queue,int opCount){
 
-    public static void main(String[] args) {
+        long start = System.nanoTime();
 
-        MyArray<Integer> array = new MyArray(20);
-        for (int i=0;i<10;i++){
+        Random random=new Random();
 
-            array.addList(i);
 
+        for (int i=0;i<opCount;i++){
+
+            queue.enqueue(random.nextInt(Integer.MAX_VALUE));
+
+        }
+        for (int i=0;i<opCount;i++){
+
+            queue.dequeue();
         }
 
 
-        System.out.println(array.toString());
-        System.out.println(array.toStringArrays());
-        System.out.println(array.contains(12));
-        System.out.println(array.findIndex(9));
+
+        long end=System.nanoTime();
+
+        return (end-start)/1000000000.0;
     }
 
+
+
+
+    public static void main(String[] args) {
+
+       int opCount=100000;
+
+       Queue<Integer> arrayQueue=new ArrayQueue<>(100000);
+        System.out.println(testQueue(arrayQueue, opCount));
+        Queue<Integer> loopQuque=new LoopQuque<>(100000);
+        System.out.println(testQueue(loopQuque, opCount));
+
+    }
 }

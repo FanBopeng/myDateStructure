@@ -8,7 +8,6 @@ package com.stack;
 public interface Stack<E> {
 
 
-    java.util.Stack
     int getSize();
     boolean isEmpty();
     void push(E e);
