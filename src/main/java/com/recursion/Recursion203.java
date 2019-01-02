@@ -1,5 +1,7 @@
 package com.recursion;
 
+
+
 /**
  * @author: fanbopeng
  * @Date: 2019/1/2 10:53
@@ -7,14 +9,7 @@ package com.recursion;
  */
 public class Recursion203 {
 
-    public class ListNode {
-        int val;
-        ListNode next;
 
-        ListNode(int x) {
-            val = x;
-        }
-    }
     //无虚拟头结点方案
     public ListNode removeElements(ListNode head,int val){
 
@@ -71,6 +66,64 @@ public class Recursion203 {
         return dummyHead.next;
 
 
+    }
+
+    //递归方式
+    public static ListNode removeElementsTest(ListNode head,int val,int depth/*递归深度*/){
+        String depthString=generaDepthString(depth);
+        System.out.println(depthString);
+        System.out.println("Call:remove "+val+"in "+head);
+        if (head==null){
+            System.out.print(depthString);
+            System.out.println("return:" +head);
+            return head;
+        }
+
+        ListNode res = removeElementsTest(head.next, val, depth + 1);
+        System.out.println(depthString);
+        System.out.println("After Remove "+val+":"+res);
+
+        ListNode  ret;
+        if (head.val==val){
+            ret=res;
+        }else {
+            head.next=res;
+            ret=head;
+
+        }
+        System.out.println(depthString);
+        System.out.println("return: "+ret);
+        return ret;
+
+
+    }
+    public static ListNode removeElements3(ListNode head,int val){
+        if (head==null){
+            return head;
+
+        }
+       head.next=  removeElements3(head.next, val);
+
+        return head.val==val? head.next:head;
+
+    }
+
+    private static String generaDepthString(int depth) {
+
+        StringBuilder res=new StringBuilder();
+        for (int i=0;i<depth;i++){
+            res.append("--");
+
+        }
+        return res.toString();
+    }
+
+
+    public static void main(String[] args) {
+
+    int[] nums={1,2,3,4,5};
+    ListNode head=new ListNode(nums);
+        System.out.println(removeElements3(head,5 ));
     }
 
 }
